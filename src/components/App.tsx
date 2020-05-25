@@ -61,7 +61,6 @@ class App extends Component<AppProps, AppState> {
                 this.rotateRouter(route.subNav, list, index, `${path}/${route.path}`);
             }
         }
-        console.log(list);
         return list;
     }
 }

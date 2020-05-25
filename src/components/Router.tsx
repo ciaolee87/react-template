@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import AccountJoin from "./account/join/AccountJoin";
 import IndexV1 from "./index/v1/IndexV1";
+import AccountLogin from "./account/login/AccountLogin";
 
 export interface NavRouter {
     // 라우터 만들때 사용
@@ -26,7 +27,8 @@ export const AuthRouter: NavRouter[] = [];
 export const NotAuthRouter: NavRouter[] = [
     {
         path: "account", name: "", isView: true, subNav: [
-            {path: "join", name: "Join", isView: true, component: AccountJoin}
+            {path: "join", name: "Join", isView: true, component: AccountJoin},
+            {path: "login", name: "Login", isView: true, component: AccountLogin},
         ]
     }
 ];
