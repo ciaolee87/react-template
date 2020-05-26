@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import styles from './App.scss';
 import classNamesBind from "classnames/bind";
 import {bindActionCreators} from "redux";
@@ -7,11 +7,14 @@ import {AccountState} from "../reducers/AccountReducer";
 import {AuthRouter, BasicRouter, NavRouter, NotAuthRouter} from "./Router";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import SystemNotFound from "./system/notFound/SystemNotFound";
+import LoadingView from "./system/loadingView/LoadingView";
+import {SystemState} from "../reducers/SystemReducer";
 
 const cx = classNamesBind.bind(styles);
 
 export interface AppProps {
-    account: AccountState
+    account: AccountState,
+    system: SystemState
 }
 
 interface AppState {
@@ -22,14 +25,17 @@ class App extends Component<AppProps, AppState> {
     render(): any {
 
         const routeList = this.getRouter();
-
+        const {system} = this.props;
         return (
-            <BrowserRouter>
-                <Switch>
-                    {routeList}
-                    <Route component={SystemNotFound}/>
-                </Switch>
-            </BrowserRouter>
+            <Fragment>
+                <LoadingView loadingView={system.loadingView}/>
+                <BrowserRouter>
+                    <Switch>
+                        {routeList}
+                        <Route component={SystemNotFound}/>
+                    </Switch>
+                </BrowserRouter>
+            </Fragment>
         );
     }
 
@@ -67,7 +73,8 @@ class App extends Component<AppProps, AppState> {
 
 export default connect(
     state => ({
-        account: (state as any).account
+        account: (state as any).account,
+        system: (state as any).system
     }),
     dispatch => ({})
 )(App);
