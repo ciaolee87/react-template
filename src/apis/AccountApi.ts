@@ -38,8 +38,7 @@ export class AccountApi extends ApiUnit {
 
             // 서버에 가입정보 보내기
             this.post('/api/account/join', reactor, {
-                email: status.email,
-                firebaseUid: user.uid
+                uid: user.uid
             });
 
         } catch (e) {
