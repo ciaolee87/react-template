@@ -7,6 +7,7 @@ import AccountJoinView from "./view/AccountJoinView";
 import produce from "immer";
 import {EmailRegEx, PasswdRegEx, Validator} from "../../../utils/regex/RegEx";
 import SwalSimple from "../../../utils/swal/simple/SwalSimple";
+import {Api} from "../../../apis/Api";
 
 const cx = classNamesBind.bind(styles);
 
@@ -79,8 +80,6 @@ class AccountJoin extends Component<AccountJoinProps, AccountJoinState> {
         submit: () => {
             const {account} = this.state;
 
-            console.log(account);
-
             if (!Validator.email(account.email)) {
                 SwalSimple("이메일을 확인하여 주십시오", "warning");
                 return;
@@ -95,8 +94,27 @@ class AccountJoin extends Component<AccountJoinProps, AccountJoinState> {
                 SwalSimple("두 비밀번호가 다릅니다.", "warning");
                 return;
             }
+            // 회원가입 api
 
+            this.apiJoin({
+                email: this.state.account.email,
+                passwd: this.state.account.pw
+            });
         }
+    }
+
+    apiJoin(status: {
+        email: string,
+        passwd: string
+    }) {
+        Api.account.join(status, {
+            success: res => {
+                SwalSimple("가입되었습니다.<br/>이메일을 확인하여 주십시오.", "success");
+            },
+            default: res => {
+                SwalSimple("실패하였습니다.<br/>다시 시도하여 주십시오.", "error");
+            }
+        })
     }
 }
 
