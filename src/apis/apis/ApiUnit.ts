@@ -94,17 +94,17 @@ class ApiUnit {
 	// 헤더에 키값 입력해주는 메소
 	private getConfig(config?: AxiosRequestConfig): AxiosRequestConfig {
 
-		const session = LocalStorage.getSession();
+		const session = LocalStorage.getToken();
 
 		if (config) {
 			if (config.headers) {
 				config.headers = {
 					...config.headers,
-					'session-cookie': LocalStorage.getSession()
+					'session-cookie': LocalStorage.getToken()
 				}
 			} else {
 				config.headers = {
-					'session-cookie': LocalStorage.getSession()
+					'session-cookie': LocalStorage.getToken()
 				}
 			}
 
@@ -112,7 +112,7 @@ class ApiUnit {
 		} else {
 			return {
 				headers: {
-					'session-cookie': LocalStorage.getSession()
+					'session-cookie': LocalStorage.getToken()
 				}
 			}
 		}

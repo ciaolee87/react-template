@@ -9,6 +9,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import SystemNotFound from "./system/notFound/SystemNotFound";
 import LoadingView from "./system/loadingView/LoadingView";
 import {SystemState} from "../reducers/SystemReducer";
+import {WSChat} from "../apis/WSChat";
 
 const cx = classNamesBind.bind(styles);
 
@@ -18,14 +19,26 @@ export interface AppProps {
 }
 
 interface AppState {
-
+    chatEngine: WSChat
 }
 
 class App extends Component<AppProps, AppState> {
-    render(): any {
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            chatEngine: new WSChat()
+        }
+    }
 
+    render(): any {
         const routeList = this.getRouter();
-        const {system} = this.props;
+        const {system, account} = this.props;
+
+        // 로그인 상태라면 채팅서버에 접속한다.
+        if (account.loginStatus == "LOGIN") {
+            this.state.chatEngine.connect().then();
+        }
+
         return (
             <Fragment>
                 <LoadingView loadingView={system.loadingView}/>

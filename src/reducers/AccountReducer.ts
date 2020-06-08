@@ -6,7 +6,7 @@ export interface AccountState {
 }
 
 const initState: AccountState = {
-    loginStatus: 'LOGOUT'
+    loginStatus: 'LOGIN'
 };
 
 class Account extends ImmerReducer<typeof initState> {

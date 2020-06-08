@@ -1,13 +1,13 @@
 export class LocalStorage {
-	static setSession(token: string) {
-		localStorage.setItem('session-cookie', token);
+	static setToken(token: string) {
+		localStorage.setItem('auth-token', token);
 	}
 
-	static getSession(): string {
-		return localStorage.getItem('session-cookie') || '';
+	static getToken(): string {
+		return localStorage.getItem('auth-token') || '';
 	}
 
-	static clearSession() {
-		localStorage.removeItem('session-cookie');
+	static clearToken() {
+		localStorage.removeItem('auth-token');
 	}
 }

@@ -5,7 +5,7 @@ export const DefaultErrorReactor: { [code: number]: () => void } = {
 	401: () => {
 		// 토큰 없음
 		SwalSimple('세션이 종료 되었습니다', 'info', () => {
-			LocalStorage.clearSession();
+			LocalStorage.clearToken();
 			window.location.href = '/';
 		});
 
@@ -14,7 +14,7 @@ export const DefaultErrorReactor: { [code: number]: () => void } = {
 	403: () => {
 		// 세션 만료
 		SwalSimple('세션이 종료 되었습니다', 'error', () => {
-			LocalStorage.clearSession();
+			LocalStorage.clearToken();
 			window.location.href = '/';
 		});
 
