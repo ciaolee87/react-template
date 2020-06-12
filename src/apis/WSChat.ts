@@ -6,21 +6,38 @@ import {LocalStorage} from "../utils/localstorage/LocalStorage";
 
 export class WSChat {
     socket: SocketIOClient.Socket | null;
+    statusCallback: (status: boolean) => void;
 
     constructor() {
         this.socket = null;
+        this.statusCallback = status => {
+
+        }
+
+        // 체커 돌리기
+        setInterval(() => {
+            if (this.socket) {
+                this.statusCallback(this.socket.connected);
+            }
+            return false;
+        }, 1000)
     }
 
+
+    // 연결상태를 반환한다.
     async connect() {
+        // 이미 연결되어 있으면 실행하지 않는다.
+        if ((this.socket) && (this.socket.connected)) {
+            return;
+        }
+
         // 소켓 로그인에 필요한 정보를 가저온다.
         const path = process.env.REACT_APP_CHAT_WS || '';
-        const socket = io(path, {path:'/chat'});
+        const socket = io(path, {path: "/chat", reconnectionAttempts: 5});
 
-        // 소켓에 연결되면 사용자 인증을 한다
-        socket.on('handshake', (ack: (token: string) => void) => {
-            const token = LocalStorage.getToken();
-            ack(token);
-        });
+        socket.on("handshake", (ack: (token: string) => void) => {
+            ack(LocalStorage.getToken());
+        })
 
         this.socket = socket;
     }
@@ -34,6 +51,14 @@ export class WSChat {
         if (!socket) {
 
         }
+    }
+
+    async disconnect() {
+        this.socket?.disconnect();
+    }
+
+    async scheduleStatus(cb: (status: boolean) => void) {
+        this.statusCallback = cb;
     }
 }
 

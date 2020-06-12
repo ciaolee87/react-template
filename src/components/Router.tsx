@@ -22,7 +22,13 @@ export const BasicRouter: NavRouter[] = [
 ];
 
 // 로그인 했을때 활성화 되는 라우터
-export const AuthRouter: NavRouter[] = [];
+export const AuthRouter: NavRouter[] = [
+    {
+        path: "chat", name: "chat", isView: true, subNav: [
+            {path: "v1", name: "ChatV1", isView: true, component: ChatV1}
+        ]
+    }
+];
 
 // 로그아웃 했을때 활성화 되는 라우터
 export const NotAuthRouter: NavRouter[] = [
@@ -30,11 +36,6 @@ export const NotAuthRouter: NavRouter[] = [
         path: "account", name: "", isView: true, subNav: [
             {path: "join", name: "Join", isView: true, component: AccountJoin},
             {path: "login", name: "Login", isView: true, component: AccountLogin},
-        ]
-    },
-    {
-        path: "chat", name: "chat", isView: true, subNav: [
-            {path: "v1", name: "ChatV1", isView: true, component: ChatV1}
         ]
     }
 ];

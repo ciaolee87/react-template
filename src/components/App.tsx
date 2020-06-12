@@ -10,6 +10,7 @@ import SystemNotFound from "./system/notFound/SystemNotFound";
 import LoadingView from "./system/loadingView/LoadingView";
 import {SystemState} from "../reducers/SystemReducer";
 import {WSChat} from "../apis/WSChat";
+import {LocalStorage} from "../utils/localstorage/LocalStorage";
 
 const cx = classNamesBind.bind(styles);
 
@@ -35,9 +36,10 @@ class App extends Component<AppProps, AppState> {
         const {system, account} = this.props;
 
         // 로그인 상태라면 채팅서버에 접속한다.
-        if (account.loginStatus == "LOGIN") {
+       /* if (account.loginStatus == "LOGIN") {
+            //todo : 임시키 입력
             this.state.chatEngine.connect().then();
-        }
+        }*/
 
         return (
             <Fragment>
